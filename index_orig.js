@@ -16,7 +16,7 @@ async function fetchProductsLinks(
   await page.waitForTimeout(delay * 1000);
   await page.goto(url, { waitUntil: "networkidle2" });
   let pageLinks = await page.evaluate(() => {
-    const goods = document.querySelectorAll(".bh6");
+    const goods = document.querySelectorAll(".hm0");
     const links = [];
     const errorBlock = document.querySelector(".f9g7");
     const pageError =
