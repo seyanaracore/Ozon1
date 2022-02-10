@@ -18,7 +18,7 @@ async function fetchProductsLinks(
   let pageLinks = await page.evaluate(() => {
     const goods = document.querySelectorAll(".hm0");
     const links = [];
-    const errorBlock = document.querySelector(".f9g7");
+    const errorBlock = document.querySelector(".q0q");
     const pageError =
       errorBlock?.textContent?.match("не нашлось") ||
       errorBlock?.textContent?.match("ошибка");
@@ -81,17 +81,17 @@ async function fetchProductsDataOnPage(
         window.isPageErrorTimer = 5;
 
         //Selectors
-        window.codeSelector = ".fk1";
-        window.imageSelector = ".e9r7";
-        window.productVarietiesSelector = ".ui-i2 > div > button.ui-f3";
-        window.activeProudctVarietySelector = "f0d8";
+        window.codeSelector = ".i8y";
+        window.imageSelector = ".hu5";
+        window.productVarietiesSelector = ".ui-i4 > div > button.ui-f4";
+        window.activeProudctVarietySelector = ".h2z";
         window.captchaSelectors = ["#main-iframe", ".error-content"];
         window.errorPageSelector = ".a3q7";
 
         //Getters
         window.getProductImageUrl = () => {
-          return document.querySelector(window.imageSelector)?.childNodes[0]
-            ?.src;
+            return document.querySelector(window.imageSelector)?.childNodes[0]
+              ?.src;
         };
         window.getProductCode = () => {
           return document
@@ -233,7 +233,7 @@ async function fetchProductsDataOnPage(
         "images:",
         productData?.images.length,
         "product:",
-        i,
+        i,"of",urls.length,
         "current page:",
         Math.ceil(i / productsPerPageMax)
       );
@@ -301,7 +301,7 @@ async function getProductsLinksList(sellerUrl, fileStream) {
       delay = productIteratationDelay;
     }
   }
-  console.log("\nSuccesful products fetched:", pagesProductsLinks.length);
+  console.log("\nSuccesful products links fetched:", pagesProductsLinks.length);
   console.error("Rejected links:", rejectedLinks.length, "\n");
   while (rejectedLinks.length) {
     let pageUrl = rejectedLinks[0].pageUrl;
@@ -391,7 +391,7 @@ const sellerName =
 const fetchedData = [];
 const rejectedProducts = [];
 const productsDataParams = {
-  path: "../out/",
+  path: "./out/",
   fileFormat: ".csv",
   initialValue: "sep=," + os.EOL + "Photos,Urls,Images" + os.EOL,
   dataHandler: (product) => {
@@ -403,7 +403,7 @@ const productsDataParams = {
   },
 };
 const productsLinksParams = {
-  path: "../out/_links/",
+  path: "./out/_links/",
   fileFormat: ".txt",
   dataHandler: (productLinks) => {
     let handledLinks = "";
@@ -431,6 +431,7 @@ const startParse = async () => {
     console.log("\n" + "Finished");
     parseSuccesful = true;
   } catch (err) {
+  closeStreams([productsDataStream, productsLinksStream]);
     console.error(err);
   }
 };
