@@ -16,7 +16,9 @@ async function fetchProductsLinks(
    await page.waitForTimeout(delay * 1000);
    await page.goto(url, { waitUntil: "networkidle2" });
    let pageLinks = await page.evaluate(() => {
-      const goods = document.querySelectorAll(".hp6 > div");
+      const goods = document.querySelectorAll(
+         '[data-widget="searchResultsV2"] > div > div'
+      );
       const links = [];
       const errorBlock = document.querySelector(".q0q");
       const pageError =
@@ -92,23 +94,29 @@ async function fetchProductsDataOnPage(
             window.errorPageSelector = ".a3q7";
 
             //Getters
+            window.getItemProp = (propName) => {
+               let itemProp = "";
+               document
+                  .querySelectorAll(
+                     '[data-widget="webCharacteristics"] > div > div > div > div'
+                  )
+                  .forEach((block) => {
+                     block.childNodes.forEach((props) => {
+                        if (props.childNodes[0].textContent.match(propName)) {
+                           itemProp = props.childNodes[1].textContent;
+                        }
+                     });
+                  });
+               return itemProp;
+            };
             window.getProductImageUrl = () => {
-               return document.querySelector(imageSelector)
-                  ?.childNodes[0]?.childNodes[0]?.childNodes[0]?.childNodes[0]?.src;
+               return document.querySelector(imageSelector)?.lastElementChild
+                  ?.childNodes[0]?.childNodes[0]?.childNodes[0]?.src;
             };
             window.getProductCode = () => {
                return document
                   .querySelector(window.codeSelector)
                   ?.textContent.split(": ")[1];
-            };
-            window.getBrand = () => {
-               const rowName = "Бренд в одежде и обуви";
-               return (
-                  [...document.querySelectorAll(".pi3")].find((el) => {
-                     return el.textContent === rowName;
-                  })?.parentElement?.parentElement?.childNodes[1]
-                     ?.textContent || ""
-               );
             };
             window.getName = () => {
                return document.querySelector(
@@ -171,7 +179,7 @@ async function fetchProductsDataOnPage(
                         let code = window.getProductCode();
                         let image = window.getProductImageUrl();
                         let name = window.getName();
-                        let brand = window.getBrand();
+                        let brand = window.getItemProp("Бренд");
 
                         if (window.setImageSize) {
                            image = image?.replace(
@@ -431,13 +439,19 @@ const sellerName =
 const fetchedData = [];
 const rejectedProducts = [];
 const productsDataParams = {
+   sep: ",",
    path: "./out/",
    fileFormat: ".csv",
-   initialValue: "sep=," + os.EOL + "Photos,Urls,Images,Name,Brand" + os.EOL,
+   headers: ["Photos", "Urls", "Images", "Name", "Brand"],
+   initialValue: `sep=,${os.EOL}Photos,Urls,Images,Name,Brand${os.EOL}`,
    dataHandler: (product) => {
       let handledData = "";
       for (let i = 0; i < product.codes.length; i++) {
-         handledData += `,https://www.ozon.ru/context/detail/id/${product.codes[i]},${product.images[i]}${os.EOL}`;
+         let productPropsString = "";
+         for (let prop in product) {
+            productPropsString += product[prop][i] + ",";
+         }
+         handledData += `,https://www.ozon.ru/context/detail/id/${productPropsString}${os.EOL}`;
       }
       return handledData.length ? handledData : product;
    },
