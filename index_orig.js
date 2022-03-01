@@ -20,10 +20,9 @@ async function fetchProductsLinks(
          '[data-widget="searchResultsV2"] > div > div'
       );
       const links = [];
-      const errorBlock = document.querySelector(".q0q");
-      const pageError =
-         errorBlock?.textContent?.match("не нашлось") ||
-         errorBlock?.textContent?.match("ошибка");
+      const pageError = document.querySelector(
+         '[data-widget="searchResultsError"]'
+      );
       const captcha = document
          .querySelector("#main-iframe")
          ?.contentWindow?.document?.querySelector(".error-content");
@@ -55,7 +54,7 @@ async function fetchProductsDataOnPage(
       let url = urls[i - 1];
       if (
          fetchedData.some((productData) =>
-            productData.codes.includes(url.split("/?")[0].split("-")[1])
+            productData.codes.includes(url?.split("/?")[0]?.split("-")[1])
          )
       ) {
          continue;
@@ -75,7 +74,11 @@ async function fetchProductsDataOnPage(
       await page.waitForTimeout((delay - 1) * 1000);
       await page.setUserAgent(UserAgent.toString());
       page.setDefaultTimeout(pageTimeout * 1000);
-      await page.goto(url, { waitUntil: "networkidle2" });
+      try {
+         await page.goto(url, { waitUntil: "networkidle2" });
+      } catch {
+         page.close();
+      }
       const productData = await page.evaluate(async () => {
          try {
             //Constants
@@ -296,12 +299,14 @@ function checkProductsLinks(pageLinks) {
       sellerName,
       productsDataParams.path
    );
-   let checkedLinks = pageLinks.filter((productLink) => {
-      let productCode = productLink
-         .split("/?")[0]
-         .slice("-9", productLink.length);
-      return !checkedProductsCodes.includes(productCode);
-   });
+   let checkedLinks = pageLinks
+      .filter((productLink) => {
+         let productCode = productLink
+            ?.split("/?")[0]
+            ?.slice("-9", productLink.length);
+         return !checkedProductsCodes.includes(productCode);
+      })
+      .filter((link) => link);
    console.log("New products for fetch:", checkedLinks.length, "\n");
    return checkedLinks;
 }
