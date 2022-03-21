@@ -90,7 +90,7 @@ async function fetchProductsDataOnPage(
 
             //Selectors
             window.codeSelector = '[data-widget="webDetailSKU"]';
-            window.imageSelector = '[data-widget="webGallery"] > div';
+            window.imageSelector = '[data-widget="webGallery"] > div img';
             window.productVarietiesSelector = ".ui-i4 > div > button.ui-f4";
             window.activeProudctVarietySelector = ".i3i .ii4.i4i";
             window.captchaSelectors = ["#main-iframe", ".error-content"];
@@ -113,8 +113,7 @@ async function fetchProductsDataOnPage(
                return itemProp;
             };
             window.getProductImageUrl = () => {
-               return document.querySelector(imageSelector)?.lastElementChild
-                  ?.childNodes[0]?.childNodes[0]?.childNodes[0]?.src;
+               return document.querySelector(imageSelector)?.src;
             };
             window.getProductCode = () => {
                return document

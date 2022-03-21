@@ -1,9 +1,9 @@
 const settings = {
-    sellerUrl: "https://www.ozon.ru/seller/hats-and-caps-598/golovnye-ubory-muzhskie-17073/?page=2",
+    sellerUrl: "https://www.ozon.ru/seller/golplyuspas-30381/golovnye-ubory-muzhskie-17073/",
     productIteratationDelay: 3,
     productsCountPerPage: false,
-    pagesHandlingCount: 6, 
-    initialIterationPage: 65,
+    pagesHandlingCount: false, 
+    initialIterationPage: 3,
     pageTimeout: 45,
 	maxDelay: 20,
 	productsPerPageMax: 36,

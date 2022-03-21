@@ -4,5 +4,8 @@
     "puppeteer": "^11.0.0",
     "user-agents": "^1.0.837"
   },
+  "scripts": {
+    "start": "node index_orig.js"
+  },
   "type": "module"
 }
