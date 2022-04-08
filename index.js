@@ -1,9 +1,9 @@
 import Puppeteer from "puppeteer";
 import UserAgent from "user-agents";
-import settings from "./components/settings.js";
-import FileStream from "./utils/WriteData.js";
+import settings from "./Utils/Configuration";
+import FileStream from "./Components/WriteData.js";
 import * as os from "os";
-import getSellerFetchedProducts from "./utils/getSellerFetchedProducts.js";
+import getSellerFetchedProducts from "./Components/getSellerFetchedProducts.js";
 
 async function fetchProductsLinks(
    url,

@@ -5,7 +5,7 @@
     "user-agents": "^1.0.837"
   },
   "scripts": {
-    "start": "node index_orig.js"
+    "start": "node index.js"
   },
   "type": "module"
 }

@@ -1,9 +1,9 @@
-const settings = {
-    sellerUrl: "https://www.ozon.ru/seller/golplyuspas-30381/golovnye-ubory-muzhskie-17073/",
+const Configuration = {
+    sellerUrl: "https://www.ozon.ru/seller/shop-top-149281/aksessuary-7697/",
     productIteratationDelay: 3,
     productsCountPerPage: false,
     pagesHandlingCount: false, 
-    initialIterationPage: 3,
+    initialIterationPage: 7,
     pageTimeout: 45,
 	maxDelay: 20,
 	productsPerPageMax: 36,
@@ -11,4 +11,4 @@ const settings = {
     sortBy: 1,
     sortingTypes: ["score", "new", "price","price_desk", "discount", "rating"],
 }
-export default settings
+export default Configuration
