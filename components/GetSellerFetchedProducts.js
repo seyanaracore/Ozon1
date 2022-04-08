@@ -1,6 +1,6 @@
 import * as fs from "fs";
 
-const defaultPath = "../out/";
+const defaultPath = "../Out/";
 
 const getSellerFetchedProducts = (sellerName, path = defaultPath) => {
    let filesData = [];

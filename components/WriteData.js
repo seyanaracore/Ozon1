@@ -3,7 +3,7 @@ import * as os from "os";
 import iconv from "iconv-lite";
 
 const defaultFileFormat = ".csv";
-const defaultPath = "./out/";
+const defaultPath = "./Out/";
 
 const getDateAndTime = () => {
    let date_ob = new Date();

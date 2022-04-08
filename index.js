@@ -3,7 +3,7 @@ import UserAgent from "user-agents";
 import settings from "./Utils/Configuration";
 import FileStream from "./Components/WriteData.js";
 import * as os from "os";
-import getSellerFetchedProducts from "./Components/getSellerFetchedProducts.js";
+import getSellerFetchedProducts from "./Components/GetSellerFetchedProducts.js";
 
 async function fetchProductsLinks(
    url,
