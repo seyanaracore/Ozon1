@@ -1,6 +1,6 @@
 import Puppeteer from "puppeteer";
 import UserAgent from "user-agents";
-import settings from "./Utils/Configuration";
+import Configuration from "./Utils/Configuration.js";
 import FileStream from "./Components/WriteData.js";
 import * as os from "os";
 import getSellerFetchedProducts from "./Components/GetSellerFetchedProducts.js";
@@ -435,11 +435,11 @@ const {
    sortBy,
    pageTimeout,
    sortingTypes,
-} = settings;
+} = Configuration;
 let parseSuccesful = false;
 let productsLinksList = false;
 const sellerName =
-   settings.sellerUrl.split("seller/")[1]?.split("/")[0] || "OzonGlobal";
+   Configuration.sellerUrl.split("seller/")[1]?.split("/")[0] || "OzonGlobal";
 const fetchedData = [];
 const rejectedProducts = [];
 const productsDataParams = {

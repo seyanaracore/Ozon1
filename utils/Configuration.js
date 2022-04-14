@@ -1,9 +1,9 @@
 const Configuration = {
-    sellerUrl: "https://www.ozon.ru/seller/shop-top-149281/aksessuary-7697/",
+    sellerUrl: "https://www.ozon.ru/seller/the-fix-sale-254320/muzhskie-aksessuary-17063/?miniapp=seller_254320&sorting=new",
     productIteratationDelay: 3,
     productsCountPerPage: false,
     pagesHandlingCount: false, 
-    initialIterationPage: 7,
+    initialIterationPage: false,
     pageTimeout: 45,
 	maxDelay: 20,
 	productsPerPageMax: 36,
